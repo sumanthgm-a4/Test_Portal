@@ -22,7 +22,7 @@
         <h1 style="padding-top: 10px;" align="center">Welcome to TestPortal</h1>
     </div>
     {% if request.user.is_authenticated %}
-    <div style="padding-top: 10px">
+    <div style="padding-top: 10px; padding-bottom: 20px">
         <h3 align="center">
             Hello @<strong>{{ request.user.username }}</strong>
         </h3>
@@ -32,6 +32,12 @@
         <h3>Please login to continue</h3>
     </div>
     {% endif %}
+    <div class="card text-center" style="max-width: 350px; height: 150px; margin: auto;">
+        <div class="card-body d-flex flex-column justify-content-center">
+            <h5 class="card-title">Take a Test</h5>
+            <a href="{% url 'tests' %}" class="btn btn-primary mt-4">Start Test</a>
+        </div>
+    </div>
     {% for i in messages %}
     <div class="alert alert-{{ i.tags }} container col-lg-6" align="center" style="padding-top: 10px;">
         {{ i }}
