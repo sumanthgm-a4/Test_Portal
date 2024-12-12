@@ -40,6 +40,9 @@ def render_register(request):
         password = request.POST.get('password')
         cpassword = request.POST.get('cpassword')
         
+        if email == User.objects.get(email=email):
+            messages.error(request, "Email already exists")
+            return redirect('register')
         if User.objects.filter(username=username):
             messages.error(request, "Username already exists")
             return redirect('register')
@@ -93,7 +96,7 @@ def run_code(request):
             ]
 
             failed_test_count = 0
-            results = []
+            results = f''
 
             for test_case in test_cases:
                 input_value = test_case['input']
@@ -117,7 +120,9 @@ print(solve_factorial({input_value}))
                 code_output = execute_code(code_with_input)
                 if code_output != str(expected_output):
                     failed_test_count += 1
-                results.append({'input': input_value, 'expected': expected_output, 'output': code_output})
+                if test_case['input'] == 5 or test_case['input'] == 3:
+                    results += f"\nInput: {test_case['input']}\nOutput: {code_output.rstrip()}\nExpected: {expected_output}\n\n"
+                print("RESULTS:", results)
 
             return JsonResponse({
                 'output': f"Test Results: {results}",
