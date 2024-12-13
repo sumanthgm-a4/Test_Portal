@@ -40,7 +40,7 @@ def render_register(request):
         password = request.POST.get('password')
         cpassword = request.POST.get('cpassword')
         
-        if email == User.objects.get(email=email):
+        if User.objects.filter(email=email):
             messages.error(request, "Email already exists")
             return redirect('register')
         if User.objects.filter(username=username):
